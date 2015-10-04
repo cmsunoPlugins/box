@@ -21,6 +21,8 @@ u::::::::::::::u  n::::n    n::::n  o:::::ooooo:::::o
      \____/           \/    \/            \__/
 </pre>
 
-### Boxs ###
+### Box ###
 
 Adds easily editable box with pieces of text or code or HTML that can be inserted into the template with a simple Shortcode. Exemple : address for footer, phone number, sidebar...
+
+[CMSUno](https://github.com/boiteasite/cmsuno)
