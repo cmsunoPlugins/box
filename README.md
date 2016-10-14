@@ -21,8 +21,13 @@ u::::::::::::::u  n::::n    n::::n  o:::::ooooo:::::o
      \____/           \/    \/            \__/
 </pre>
 
-### Box ###
+## Box ##
 
 Adds easily editable box with pieces of text or code or HTML that can be inserted into the template with a simple Shortcode. Exemple : address for footer, phone number, sidebar...
 
 [CMSUno](https://github.com/boiteasite/cmsuno)
+
+### Versions ###
+
+* 1.1 - 14/10/2016 : Use PHP-Gettext in place of gettext
+* 1.0 - 05/10/2015 : First stable version
