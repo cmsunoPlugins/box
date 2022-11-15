@@ -1,16 +1,13 @@
 <?php
 session_start(); 
-if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {sleep(2);exit;} // ajax request
 if(!isset($_POST['unox']) || $_POST['unox']!=$_SESSION['unox']) {sleep(2);exit;} // appel depuis uno.php
 ?>
 <?php
 include('../../config.php');
 include('lang/lang.php');
 // ********************* actions *************************************************************************
-if (isset($_POST['action']))
-	{
-	switch ($_POST['action'])
-		{
+if(isset($_POST['action'])) {
+	switch ($_POST['action']) {
 		// ********************************************************************************************
 		case 'plugin': ?>
 		<div class="blocForm">
@@ -45,23 +42,21 @@ if (isset($_POST['action']))
 		case 'save':
 		$q = file_get_contents('../../data/busy.json'); $a = json_decode($q,true); $Ubusy = $a['nom'];
 		$a = array(); $c=0;
-		foreach($_POST as $k=>$v)
-			{
-			if ($k!='action' && $k!='unox')
-				{
+		foreach($_POST as $k=>$v) {
+			if($k!='action' && $k!='unox') {
 				$a['box'][$c]['n'] = substr($k,1); // name
 				$a['box'][$c]['t'] = substr($k,0,1); // type
 				$a['box'][$c]['b'] = stripslashes(str_replace('<','&lt;',$v)); // box content
-				}
-			++$c;
 			}
+			++$c;
+		}
 		$out = json_encode($a);
 		if (file_put_contents('../../data/'.$Ubusy.'/box.json', $out)) echo T_('Backup performed');
 		else echo '!'.T_('Impossible backup');
 		break;
 		// ********************************************************************************************
-		}
+	}
 	clearstatcache();
 	exit;
-	}
+}
 ?>

@@ -3,13 +3,17 @@
 // Plugin Box
 //
 function f_save_box(){
-	jQuery(document).ready(function(){
-		var a=document.getElementById("frmBox").getElementsByTagName("textarea"),b,h=[];
-		h.push({name:'action',value:'save'});
-		h.push({name:'unox',value:Unox});
-		for(v=0;v<a.length;v++){if(a[v].name.substr(0,1)=='E')b=CKEDITOR.instances[a[v].name].getData();else b=a[v].value;h.push({name:a[v].name,value:b});};
-		jQuery.post('uno/plugins/box/box.php',h,function(r){f_alert(r);});
-	});
+	let a=document.getElementById("frmBox").getElementsByTagName("textarea"),b,h=new FormData();
+	h.set('action','save');
+	h.set('unox',Unox);
+	for(v=0;v<a.length;v++){
+		if(a[v].name.substr(0,1)=='E')b=CKEDITOR.instances[a[v].name].getData();
+		else b=a[v].value;
+		h.set(a[v].name,b);
+	}
+	fetch('uno/plugins/box/box.php',{method:'post',body:h})
+	.then(r=>r.text())
+	.then(r=>f_alert(r));
 }
 //
 function f_add_box(f,g){
@@ -42,13 +46,15 @@ function f_add_box(f,g){
 }
 //
 function f_load_box(){
-	jQuery(document).ready(function(){
-		jQuery.getJSON("uno/data/"+Ubusy+"/box.json?r="+Math.random(),function(data){
-			jQuery.each(data.box,function(k,d){
-				jQuery('#curBox').append('<tr><td style="width:100px;vertical-align:middle;padding-left:40px;">'+d.n+'</td><td style="'+(d.t=='E'?'padding-bottom:10px;padding-top:10px':'padding-right:8px;')+'"><textarea style="width:100%;" name="'+d.t+d.n+'">'+d.b+'</textarea></td><td width="30px" style="cursor:pointer;background:transparent url(\''+Udep+'includes/img/close.png\') no-repeat scroll center center;" onClick="this.parentNode.parentNode.removeChild(this.parentNode);"></td></tr>');
-				if(d.t=='E')CKEDITOR.replace(d.t+d.n,{height:'300'});
-			});
-		});
+	let a = document.getElementById('curBox'),k,d;
+	fetch("uno/data/"+Ubusy+"/box.json?r="+Math.random())
+	.then(r=>r.json())
+	.then(function(data){
+		for(k in data.box){
+			d=data.box[k];
+			document.getElementById('curBox').insertAdjacentHTML('beforeend','<tr><td style="width:100px;vertical-align:middle;padding-left:40px;">'+d.n+'</td><td style="'+(d.t=='E'?'padding-bottom:10px;padding-top:10px':'padding-right:8px;')+'"><textarea style="width:100%;" name="'+d.t+d.n+'">'+d.b+'</textarea></td><td width="30px" style="cursor:pointer;background:transparent url(\''+Udep+'includes/img/close.png\') no-repeat scroll center center;" onClick="this.parentNode.parentNode.removeChild(this.parentNode);"></td></tr>');
+			if(d.t=='E')CKEDITOR.replace(d.t+d.n,{height:'300'});
+		}
 	});
 }
 //
