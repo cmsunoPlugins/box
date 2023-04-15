@@ -29,6 +29,7 @@ Adds easily editable box with pieces of text or code or HTML that can be inserte
 
 ### Versions ###
 
+* 1.2.1 - 15/04/2023 : Add post ubusy
 * 1.2 - 15/11/2022 : ES6 - JQuery free
 * 1.1.1 - 15/03/2017 : Fix issue with unknow lang
 * 1.1 - 14/10/2016 : Use PHP-Gettext in place of gettext

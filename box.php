@@ -5,6 +5,7 @@ if(!isset($_POST['unox']) || $_POST['unox']!=$_SESSION['unox']) {sleep(2);exit;}
 <?php
 include('../../config.php');
 include('lang/lang.php');
+$busy = (isset($_POST['ubusy'])?preg_replace("/[^A-Za-z0-9-_]/",'',$_POST['ubusy']):'index');
 // ********************* actions *************************************************************************
 if(isset($_POST['action'])) {
 	switch ($_POST['action']) {
@@ -40,10 +41,9 @@ if(isset($_POST['action'])) {
 		<?php break;
 		// ********************************************************************************************
 		case 'save':
-		$q = file_get_contents('../../data/busy.json'); $a = json_decode($q,true); $Ubusy = $a['nom'];
 		$a = array(); $c=0;
 		foreach($_POST as $k=>$v) {
-			if($k!='action' && $k!='unox') {
+			if($k!='action' && $k!='unox'&& $k!='ubusy') {
 				$a['box'][$c]['n'] = substr($k,1); // name
 				$a['box'][$c]['t'] = substr($k,0,1); // type
 				$a['box'][$c]['b'] = stripslashes(str_replace('<','&lt;',$v)); // box content
@@ -51,7 +51,7 @@ if(isset($_POST['action'])) {
 			++$c;
 		}
 		$out = json_encode($a);
-		if (file_put_contents('../../data/'.$Ubusy.'/box.json', $out)) echo T_('Backup performed');
+		if (file_put_contents('../../data/'.$busy.'/box.json', $out)) echo T_('Backup performed');
 		else echo '!'.T_('Impossible backup');
 		break;
 		// ********************************************************************************************

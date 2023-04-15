@@ -6,6 +6,7 @@ function f_save_box(){
 	let a=document.getElementById("frmBox").getElementsByTagName("textarea"),b,h=new FormData();
 	h.set('action','save');
 	h.set('unox',Unox);
+	h.set('ubusy',Ubusy);
 	for(v=0;v<a.length;v++){
 		if(a[v].name.substr(0,1)=='E')b=CKEDITOR.instances[a[v].name].getData();
 		else b=a[v].value;
